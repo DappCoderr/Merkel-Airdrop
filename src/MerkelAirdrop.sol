@@ -27,7 +27,7 @@ contract MerkleAirdrop{
     }
 
     function claim(address account, uint256 amount, bytes32[] calldata merkleProof) external {
-        if(s_hasClaimed){
+        if(s_hasClaimed[account]){
             revert MerkleAirdrop__AlreadyClaimed();
         }
         bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(account, amount))));
@@ -36,7 +36,14 @@ contract MerkleAirdrop{
         }
         emit claimed(account, amount);
         i_airDropToken.transfer(account, amount);
-        s_hasClaimed[account] = true
+        s_hasClaimed[account] = true;
     }
 
+    function getMerkleProof() external view returns(bytes32){
+        return i_merkleProof;
+    }
+
+    function getAirdropToken() external view returns(IERC20) {
+        return i_airDropToken;
+    }
 }
