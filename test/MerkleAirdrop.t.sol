@@ -25,7 +25,7 @@ contract MerkleAirdropTest is Test{
         token = new WagmiToken();
         token.mint(token.owner(), AMOUNT_TO_SEND);
         token.transfer(address(airdrop), AMOUNT_TO_SEND);
-        (user, userPrivateKey) = makeAddrAndKey("user");
+        (user, userPrivateKey) = makeAddrAndKey("Alice");
     }
 
     function testUserCanClaim() public {
